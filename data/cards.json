@@ -1,0 +1,312 @@
+[
+  {
+    "id": 1,
+    "name": "ドリー・タャントワネット",
+    "mark": "yado",
+    "power": 4,
+    "ability": {
+      "type": "none",
+      "description": "敗北時、ボーナス+2"
+    }
+  },
+  {
+    "id": 2,
+    "name": "たゃ文明",
+    "mark": "yado",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 3,
+    "name": "ドリトラワン",
+    "mark": "yado",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": "最初の3ラウンドに出せば必ず勝利"
+    }
+  },
+  {
+    "id": 4,
+    "name": "カリー・ルワン",
+    "mark": "yado",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 5,
+    "name": "エル・マタドーリィ",
+    "mark": "yado",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 6,
+    "name": "ドリィ ルワン",
+    "mark": "yado",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": "最終ラウンドで勝利すると点数+10"
+    }
+  },
+  {
+    "id": 7,
+    "name": "ルワン・リー",
+    "mark": "yado",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 8,
+    "name": "ルワン大人",
+    "mark": "yado",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": "敗北時、相手カードの点数が5になる"
+    }
+  },
+  {
+    "id": 9,
+    "name": "レッドハーミットシング",
+    "mark": "yado",
+    "power": 8,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 10,
+    "name": "【パリイ】 ルワン",
+    "mark": "ika",
+    "power": 3,
+    "ability": {
+      "type": "none",
+      "description": "敗北時、相手カードの点数が0になる"
+    }
+  },
+  {
+    "id": 11,
+    "name": "ルワン・ドリーリ",
+    "mark": "ika",
+    "power": 4,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 12,
+    "name": "ドリアーティ教授",
+    "mark": "ika",
+    "power": 4,
+    "ability": {
+      "type": "none",
+      "description": "最初の3ラウンドに出せば必ず引き分け"
+    }
+  },
+  {
+    "id": 13,
+    "name": "ヤドカーリイ・ドドーリン",
+    "mark": "ika",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 14,
+    "name": "オディ ルワン",
+    "mark": "ika",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": "勝利時に相手カードの点数を獲得"
+    }
+  },
+  {
+    "id": 15,
+    "name": "テリィ・ルワンJr.",
+    "mark": "ika",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 16,
+    "name": "ダーティ・ドリィ",
+    "mark": "ika",
+    "power": 8,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 17,
+    "name": "ヤド方ドリ三",
+    "mark": "ika",
+    "power": 8,
+    "ability": {
+      "type": "none",
+      "description": "第1ラウンドで勝利するとボーナス+2"
+    }
+  },
+  {
+    "id": 18,
+    "name": "桃原の猶なもの",
+    "mark": "ika",
+    "power": 9,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 19,
+    "name": "ドリステ・ルョワン",
+    "mark": "mana",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 20,
+    "name": "ドリオ・ヤドナシー",
+    "mark": "mana",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": "敗北時、相手カードの点数が0になる"
+    }
+  },
+  {
+    "id": 21,
+    "name": "ドリルワザウルス",
+    "mark": "mana",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": "第1ラウンドで勝利するとボーナス+3"
+    }
+  },
+  {
+    "id": 22,
+    "name": "ドリ・マスカラス",
+    "mark": "mana",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 23,
+    "name": "ヤドカリジュース",
+    "mark": "mana",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 24,
+    "name": "ドリレオ・ドリレィ",
+    "mark": "mana",
+    "power": 6,
+    "ability": {
+      "type": "none",
+      "description": "敗北時、ボーナス+2"
+    }
+  },
+  {
+    "id": 25,
+    "name": "ヤド・カリス",
+    "mark": "mana",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 26,
+    "name": "ルゥルゥワン・ドリー",
+    "mark": "mana",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 27,
+    "name": "ドリィ ル天",
+    "mark": "mana",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": "最終ラウンドで勝利するとボーナス+5"
+    }
+  },
+  {
+    "id": 28,
+    "name": "ドリ変天目ル碗",
+    "mark": "tatsu",
+    "power": 2,
+    "ability": {
+      "type": "none",
+      "description": "第1ラウンドで勝利するとボーナス+3"
+    }
+  },
+  {
+    "id": 29,
+    "name": "ドリングルズ",
+    "mark": "tatsu",
+    "power": 3,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 30,
+    "name": "ホーリィ ルワン",
+    "mark": "tatsu",
+    "power": 5,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  },
+  {
+    "id": 31,
+    "name": "ニンリバル・レクター",
+    "mark": "tatsu",
+    "power": 7,
+    "ability": {
+      "type": "none",
+      "description": ""
+    }
+  }
+]

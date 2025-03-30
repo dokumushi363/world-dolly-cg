@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV → JSON 変換ツール</title>
+</head>
+<body>
+  <h1>カードデータ変換ツール（CSV → cards.json）</h1>
+  <input type="file" id="csvFile" accept=".csv" />
+  <button onclick="convertCSVtoJSON()">変換してcards.jsonをダウンロード</button>
+  <pre id="output"></pre>
+
+  <script>
+    function convertCSVtoJSON() {
+      const fileInput = document.getElementById("csvFile");
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("CSVファイルを選択してください。");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const text = e.target.result;
+        const lines = text.trim().split("\n");
+
+        // 最初の2行目からカラムを取得（ヘッダー）
+        const headers = lines[1].split(",").map(h => h.trim());
+
+        const jsonArray = [];
+        for (let i = 2; i < lines.length; i++) {
+          const row = lines[i].split(",").map(cell => cell.trim());
+          const obj = {
+            id: parseInt(row[0]),
+            name: row[1],
+            mark: row[2],
+            power: parseInt(row[3]),
+            ability: {
+              type: row[4],
+              description: row[5] || ""
+            }
+          };
+          jsonArray.push(obj);
+        }
+
+        const jsonStr = JSON.stringify(jsonArray, null, 2);
+        document.getElementById("output").textContent = jsonStr;
+
+        // 自動ダウンロード
+        const blob = new Blob([jsonStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "cards.json";
+        a.click();
+      };
+
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+</html>
