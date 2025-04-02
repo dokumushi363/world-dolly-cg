@@ -2,31 +2,23 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>カードゲーム『世界のドリィ達』</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>『世界のドリィ達』カード図鑑</title>
+  <link rel="stylesheet" href="viewstyle.css">
 </head>
 <body>
   <h1>
-    『世界のドリィ達』カードバトル
-    <button id="help-button" title="属性相性を見る">？</button>
-    <button id="dictionary-button" title="カード図鑑を見る">📘 図鑑</button>
+    『世界のドリィ達』カード図鑑
   </h1>
 
-  <div id="help-popup" class="hidden">
-    <h2>属性相性</h2>
-    <ul>
-      <li><strong>🐚ヤドカリ</strong> → 🍀マナティ に勝つ</li>
-      <li><strong>🦑ホタルイカ</strong> → 🐚ヤドカリ に勝つ</li>
-      <li><strong>🍀マナティ</strong> → 🦑ホタルイカ に勝つ</li>
-      <li><strong>🐉タツノオトシゴ</strong> → 🐚🦑🍀すべて に勝つ</li>
-    </ul>
-    <button id="help-close">閉じる</button>
+  <div class="container">
+    <div id="card-display" class="card">
+      <!-- カードの内容がここに表示される -->
+    </div>
+    <button id="shuffle-button">ランダムで表示</button>
   </div>
+  <button id="back-button">ゲームに戻る</button>
 
-  <div id="round-info"></div>
-  <div id="hand-area"></div>
-  <div id="cpu-card-area"></div>
-  <div id="result"></div>
   <script>
     const allCards = [
       { id: 1, name: "ドリー・タャントワネット", mark: "yado", power: 4, ability: { type: "none", description: "能力なし" } },
@@ -62,6 +54,7 @@
       { id: 31, name: "ニンリバル・レクター", mark: "tatsu", power: 7, ability: { type: "none", description: "能力なし" } }
     ];
   </script>
-  <script src="game.js"></script>
+  <script src="carddata.js"></script> <!-- カードデータは既存のものを流用 -->
+  <script src="view.js"></script>
 </body>
 </html>

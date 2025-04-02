@@ -1,10 +1,27 @@
+const markDisplayMap = {
+  yado: "🐚",
+  ika: "🦑",
+  mana: "🍀",
+  tatsu: "🐉"
+};
+
+/*　ローカル環境では使用できないらしい
 let allCards = [];
+*/
+
 let playerHand = [];
 let cpuHand = [];
 let playerScore = 0;
 let cpuScore = 0;
 let currentRound = 1;
 
+const handArea = document.getElementById("hand-area");
+const result = document.getElementById("result");
+const cpuArea = document.getElementById("cpu-card-area");
+
+/*　ローカル環境では使用できないらしい
+
+// カードデータをもらってくる
 fetch("data/cards.json")
   .then(response => response.json())
   .then(data => {
@@ -12,6 +29,9 @@ fetch("data/cards.json")
     startGame(); // ← 初期処理をここで開始
   });
 
+  */
+
+// ゲーム開始処理。手札生成とカード描画を含む
 function startGame() {
   const hands = generateDistinctHands(allCards);
   playerHand = hands.playerHand;
@@ -22,19 +42,16 @@ function startGame() {
   renderHand(); // ← カード描画スタート
 }
 
-const markDisplayMap = {
-  yado: "🐚",
-  ika: "🦑",
-  mana: "🍀",
-  tatsu: "🐉"
-};
+startGame(); // Web版にするとき外す
 
+// 手札生成
 function generateDistinctHands(allCards) {
   const pickUnique = (cards, count) => {
     const shuffled = [...cards].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
   };
 
+  // 特定IDの範囲から任意の枚数ドローする（属性のバランスをとる）
   const pickFromRange = (rangeStart, rangeEnd, count, excludeIds = []) => {
     return pickUnique(
       allCards.filter(c => c.id >= rangeStart && c.id <= rangeEnd && !excludeIds.includes(c.id)),
@@ -60,10 +77,6 @@ function generateDistinctHands(allCards) {
     cpuHand: [...c1, ...c2, ...c3, ...c4]
   };
 }
-
-const handArea = document.getElementById("hand-area");
-const result = document.getElementById("result");
-const cpuArea = document.getElementById("cpu-card-area");
 
 // ラウンドごとの情報整理
 function updateRoundInfo() {
@@ -94,7 +107,7 @@ function updateRoundInfo() {
   roundInfo.innerHTML = roundText;
 }
 
-// カード情報の表示
+// カード情報の表示に関する詳細
 function renderCardHTML(card) {
   const markImgPath = `images/marks/${card.mark}.png`;
   const wrapperClass = `card-image-wrapper mark-${card.mark}`;
@@ -114,6 +127,7 @@ function renderCardHTML(card) {
   `;
 }
 
+// ログのほうへのカード情報の表示に関する詳細
 function renderLabeledCardHTML(card, label) {
   return `
     <div class="log-card-wrapper">
@@ -123,7 +137,7 @@ function renderLabeledCardHTML(card, label) {
   `;
 }
 
-// ← カードのボタンを押して手札を出す操作
+// カードを生成、ボタンを押して手札を出す操作
 function renderHand() {
   updateRoundInfo();
 
@@ -133,7 +147,7 @@ function renderHand() {
     btn.className = "card-button";
     btn.innerHTML = renderCardHTML(card);
 
-    // ✅ 第6ラウンド以降はクリック無効
+    // 第6ラウンド以降はクリック無効
     if (currentRound > 6) {
       btn.disabled = true;
     } else {
@@ -264,4 +278,9 @@ document.getElementById("help-button").addEventListener("click", () => {
 
 document.getElementById("help-close").addEventListener("click", () => {
   document.getElementById("help-popup").classList.add("hidden");
+});
+
+document.getElementById("dictionary-button").addEventListener("click", () => {
+  // window.open("dictionary.html", "_blank"); // ← 新しいタブで開く場合
+  location.href = "dictionary.html"; // ← 同じタブで遷移する場合
 });

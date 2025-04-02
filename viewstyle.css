@@ -1,0 +1,162 @@
+body {
+  text-align: center;   /* 親要素として中央揃え */
+  padding: 20px;
+  font-family: sans-serif;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.card {
+  width: 440px;
+  height: 640px;
+  margin: 0 auto 30px;  /* ← カードを中央揃え＋ボタンと距離を取る */
+  padding: 0;
+  background: #fff;
+  border: 4px solid #333;
+  border-radius: 24px;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.card-header.mark-yado {
+  background-color: #c0392b;  /* 落ち着いた赤 */
+  color: #fff;
+}
+
+.card-header.mark-ika {
+  background-color: #2980b9;  /* 落ち着いた青 */
+  color: #fff;
+}
+
+.card-header.mark-mana {
+  background-color: #27ae60;  /* 落ち着いた緑 */
+  color: #fff;
+}
+
+.card-header.mark-tatsu {
+  background-color: #f39c12;  /* 落ち着いた黄色 */
+  color: #fff;
+}
+
+.card-header {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  padding: 12px 12px;
+  display: flex;
+  justify-content: center;   /* ← 横方向の中央寄せ */
+  align-items: center;       /* ← 縦方向の中央寄せ */
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.card-image-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.7); /* or 黒で暗くする */
+  z-index: 0;
+}
+.card-image, .card-point, .card-mark-icon {
+  position: relative;
+  z-index: 1;
+}
+
+.card-image-wrapper {
+  position: relative;
+  height: 452px;  /* ← 高さを固定（重要！） */
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 属性ごとの背景画像 */
+.card-image-wrapper.mark-yado {
+  background-image: url("images/bg/yado.png");
+}
+
+.card-image-wrapper.mark-ika {
+  background-image: url("images/bg/ika.png");
+}
+
+.card-image-wrapper.mark-mana {
+  background-image: url("images/bg/mana.png");
+}
+
+.card-image-wrapper.mark-tatsu {
+  background-image: url("images/bg/tatsu.png");
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.card-mark-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  background: rgba(0,0,0,0);
+  padding: 0px;
+}
+
+.card-point {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  background: #fff;
+  border: 4px solid #666;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  font-family: Arial, sans-serif;
+  font-size: 3.4em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.card-footer {
+  font-size: 1.4em;
+  line-height: 1.6;
+  height: 96px;         /* ← 約2行分 */
+  padding: 0 16px;
+  color: #000;
+  background: #fbfbfb;
+  border-top: 2px solid #ccc;
+  display: flex;                 /* ← これがポイント！ */
+  align-items: center;          /* ← 垂直方向中央揃え */
+  justify-content: center;      /* ← 水平方向中央（必要なら） */
+  text-align: center;           /* ← 複数行でも中央寄せ */
+  overflow: hidden;
+  white-space: normal;
+}
+
+button {
+  width: 200px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #fbfbfb;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
