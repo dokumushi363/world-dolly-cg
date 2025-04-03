@@ -19,6 +19,10 @@ const handArea = document.getElementById("hand-area");
 const result = document.getElementById("result");
 const cpuArea = document.getElementById("cpu-card-area");
 
+function addLog(text) {
+  result.innerHTML = text + "<br>" + result.innerHTML;
+}
+
 /*　ローカル環境では使用できないらしい
 
 // カードデータをもらってくる
@@ -98,10 +102,14 @@ function updateRoundInfo() {
   .join(" ");
 
   if (currentRound === 7) {
-    roundText = `最終ラウンド終了<br><span style="font-size: 0.9em;">相手の手札： ${cpuMarkSummary}</span>`;
+    roundText = `<span style="font-size: 1.2em;">あなた：${playerScore}点　CPU：${cpuScore}点</span>`;
+    roundText += `<br><span style="font-size: 0.9em;">最終ラウンド終了`;
+    roundText += `<br><span style="font-size: 0.9em;">相手の手札： ${cpuMarkSummary}</span>`;
   } else {
     const roundLabel = currentRound === 6 ? "最終ラウンド" : `第${currentRound}ラウンド`;
-    roundText = `${roundLabel}：カードを選んでください<br><span style="font-size: 0.9em;">相手の手札： ${cpuMarkSummary}</span>`;
+    roundText = `<span style="font-size: 1.2em;">あなた：${playerScore}点　CPU：${cpuScore}点</span>`;
+    roundText += `<br><span style="font-size: 0.9em;">${roundLabel}：カードを選んでください`;
+    roundText += `<br><span style="font-size: 0.9em;">相手の手札： ${cpuMarkSummary}</span>`;
   }
 
   roundInfo.innerHTML = roundText;
@@ -183,26 +191,35 @@ function playRound(playerCard, playerIndex) {
   let cpuGain = 0;
   let playerPts = playerCard.power;
   let cpuPts = cpuCard.power;
-
-  // 能力反映（簡易：vs_mark系だけ対応）
-  if (playerCard.ability.type === "vs_mark" && cpuCard.mark === playerCard.ability.target) {
-    playerPts += playerCard.ability.value;
-  }
-  if (cpuCard.ability.type === "vs_mark" && playerCard.mark === cpuCard.ability.target) {
-    cpuPts += cpuCard.ability.value;
-  }
+  let roundLog = "";
   
   // ポイント獲得
   if (winner === "player") {
     playerGain = playerCard.power;
-    playerScore += playerGain;  
+    playerScore += playerGain;
+    roundLog += `🎉 あなたの勝ち！ +${playerGain}点<br>`;
   } else if (winner === "cpu") {
     cpuGain = cpuCard.power;
     cpuScore += cpuGain;  
+    roundLog += `💥 CPUの勝ち！ +${cpuGain}点<br>`;
+  } else {
+    roundLog += `⚖️ 引き分け！ 双方得点なし<br>`;
+  }
+
+  // 敗北時の能力処理（敗者にも加点）
+  if (winner === "cpu" && playerCard.ability?.type === "lose_bonus") {
+    const bonus = playerCard.ability.value || 0;
+    playerScore += bonus;
+    roundLog += `能力発動：あなたは敗北したが、能力により +${bonus}点<br>`;
+  }
+  if (winner === "player" && cpuCard.ability?.type === "lose_bonus") {
+    const bonus = cpuCard.ability.value || 0;
+    cpuScore += bonus;
+    roundLog += `能力発動：CPUは敗北したが、能力により +${bonus}点<br>`;
   }
 
   // 対戦カード画像と名前表示
-  const playerCardHTML = renderLabeledCardHTML(playerCard, "＜プレイヤー＞");
+  const playerCardHTML = renderLabeledCardHTML(playerCard, "＜あなた＞");
   const cpuCardHTML = renderLabeledCardHTML(cpuCard, "＜CPU＞");
   
   const battleLog = `
@@ -213,21 +230,21 @@ function playRound(playerCard, playerIndex) {
     </div>
   `;  
 
+  //ラウンド数表示
   let log = `<div class="log-round">ラウンド ${currentRound}</div>`;
 
-  if (winner === "player") {
-    resultText = `🎉 あなたの勝ち！ +${playerGain}点`;
-  } else if (winner === "cpu") {
-    resultText = `💥 CPUの勝ち！ +${cpuGain}点`;
-  } else {
-    resultText = `⚖️ 引き分け！ 得点なし`;
-  }
+  const roundHeader = `<div class="log-round">ラウンド ${currentRound}</div>`;
+  const logDetails = `<div class="log-detail">${roundLog}</div>`;
 
   result.innerHTML = `
-    ${log}
+  <div class="log-container">
     ${battleLog}
-    <p>${resultText}</p>
-  ` + result.innerHTML;
+    <div class="log-right">
+      ${roundHeader}
+      ${logDetails}
+    </div>
+  </div>
+` + result.innerHTML;
 
   currentRound++;
 
@@ -236,7 +253,7 @@ function playRound(playerCard, playerIndex) {
   if (currentRound > 6) {
     setTimeout(() => {
       showFinalResult()
-    }, 600);
+    }, 1000);
   }
 }
 
