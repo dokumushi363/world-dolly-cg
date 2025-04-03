@@ -206,6 +206,31 @@ function playRound(playerCard, playerIndex) {
     roundLog += `⚖️ 引き分け！ 双方得点なし<br>`;
   }
 
+  // 勝利処理のあとに、勝者カードの能力をチェック
+  if (winner === "player" && playerCard.ability?.type === "first_win_bonus" && currentRound === 1) {
+    const bonus = playerCard.ability.value || 0;
+    playerScore += bonus;
+    roundLog += `能力発動：最初に勝利ボーナス +${bonus}点<br>`;
+  }
+
+  if (winner === "cpu" && cpuCard.ability?.type === "first_win_bonus" && currentRound === 1) {
+    const bonus = cpuCard.ability.value || 0;
+    cpuScore += bonus;
+    roundLog += `能力発動：CPU 最初に勝利ボーナス +${bonus}点<br>`;
+  }
+
+  if (winner === "player" && playerCard.ability?.type === "last_win_bonus" && currentRound === 6) {
+    const bonus = playerCard.ability.value || 0;
+    playerScore += bonus;
+    roundLog += `能力発動：最後に勝利ボーナス +${bonus}点<br>`;
+  }
+
+  if (winner === "cpu" && cpuCard.ability?.type === "last_win_bonus" && currentRound === 6) {
+    const bonus = cpuCard.ability.value || 0;
+    cpuScore += bonus;
+    roundLog += `能力発動：CPU 最後に勝利ボーナス +${bonus}点<br>`;
+  }
+
   // 敗北時の能力処理（敗者にも加点）
   if (winner === "cpu" && playerCard.ability?.type === "lose_bonus") {
     const bonus = playerCard.ability.value || 0;
