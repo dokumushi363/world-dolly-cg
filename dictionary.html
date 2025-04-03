@@ -18,19 +18,20 @@
     <button id="shuffle-button">ランダムで表示</button>
   </div>
   <button id="back-button">ゲームに戻る</button>
+
   <script>
     const allCards = [
-      { id: 1, name: "ドリー・タャントワネット", mark: "yado", power: 4, ability: { type: "lose_bonus", value: 2, description: "敗北時、ボーナス+2点" } },
+      { id: 1, name: "ドリー・タャントワネット", mark: "yado", power: 4, ability: { type: "lose_bonus", value: 3, description: "敗北時、ボーナス3点獲得" } },
       { id: 2, name: "たゃ文明", mark: "yado", power: 5, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 3, name: "ドリトラワン", mark: "yado", power: 5, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 4, name: "カリー・ルワン", mark: "yado", power: 6, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 5, name: "エル・マタドーリィ", mark: "yado", power: 6, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 6, name: "ドリィ ルワン", mark: "yado", power: 6, ability: { type: "last_power", value: 12, description: "最終ラウンドのみ攻撃力+12" } },
       { id: 7, name: "ルワン・リー", mark: "yado", power: 7, ability: { type: "none", value: 0, description: "能力なし" } },
-      { id: 8, name: "ルワン大人", mark: "yado", power: 7, ability: { type: "none", value: 0, description: "能力なし" } },
+      { id: 8, name: "ルワン大人", mark: "yado", power: 7, ability: { type: "change_power", value: 3, description: "相手カードの攻撃力を3にする" } },
       { id: 9, name: "レッドハーミットシング", mark: "yado", power: 8, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 10, name: "オディ ルワン", mark: "ika", power: 0, ability: { type: "copy_power", value: 0, description: "相手カードの攻撃力をコピーする" } },
-      { id: 11, name: "【パリイ】 ルワン", mark: "ika", power: 3, ability: { type: "none", value: 0, description: "能力なし" } },
+      { id: 11, name: "【パリイ】 ルワン", mark: "ika", power: 3, ability: { type: "change_power", value: 1, description: "相手カードの攻撃力を1にする" } },
       { id: 12, name: "ルワン・ドリーリ", mark: "ika", power: 4, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 13, name: "ドリアーティ教授", mark: "ika", power: 4, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 14, name: "ヤドカーリイ・ドドーリン", mark: "ika", power: 5, ability: { type: "none", value: 0, description: "能力なし" } },
@@ -39,20 +40,21 @@
       { id: 17, name: "ヤド方ドリ三", mark: "ika", power: 8, ability: { type: "first_power", value: 2, description: "第1ラウンドのみ攻撃力+2" } },
       { id: 18, name: "桃原の猶なもの", mark: "ika", power: 9, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 19, name: "ドリステ・ルョワン", mark: "mana", power: 5, ability: { type: "none", value: 0, description: "能力なし" } },
-      { id: 20, name: "ドリオ・ヤドナシー", mark: "mana", power: 5, ability: { type: "none", value: 0, description: "能力なし" } },
+      { id: 20, name: "ドリオ・ヤドナシー", mark: "mana", power: 5, ability: { type: "change_power", value: 2, description: "相手カードの攻撃力を2にする" } },
       { id: 21, name: "ドリルワザウルス", mark: "mana", power: 5, ability: { type: "first_power", value: 3, description: "第1ラウンドのみ攻撃力+3" } },
       { id: 22, name: "ドリ・マスカラス", mark: "mana", power: 6, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 23, name: "ヤドカリジュース", mark: "mana", power: 6, ability: { type: "none", value: 0, description: "能力なし" } },
-      { id: 24, name: "ドリレオ・ドリレィ", mark: "mana", power: 6, ability: { type: "lose_bonus", value: 2, description: "敗北時、ボーナス+2点" } },
+      { id: 24, name: "ドリレオ・ドリレィ", mark: "mana", power: 6, ability: { type: "lose_bonus", value: 2, description: "敗北時、ボーナス2点獲得" } },
       { id: 25, name: "ヤド・カリス", mark: "mana", power: 7, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 26, name: "ルゥルゥワン・ドリー", mark: "mana", power: 7, ability: { type: "none", value: 0, description: "能力なし" } },
-      { id: 27, name: "ドリィ ル天", mark: "mana", power: 7, ability: { type: "last_power", value: 5, description: "最終ラウンドのみ攻撃力+5" } },
-      { id: 28, name: "ドリ変天目ル碗", mark: "tatsu", power: 3, ability: { type: "first_power", value: 3, description: "第1ラウンドのみ攻撃力+3" } },
+      { id: 27, name: "ドリィ ル天", mark: "mana", power: 7, ability: { type: "last_power", value: 7, description: "最終ラウンドのみ攻撃力+7" } },
+      { id: 28, name: "ドリ変天目ル碗", mark: "tatsu", power: 2, ability: { type: "first_power", value: 3, description: "第1ラウンドのみ攻撃力+3" } },
       { id: 29, name: "ドリングルズ", mark: "tatsu", power: 4, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 30, name: "ホーリィ ルワン", mark: "tatsu", power: 5, ability: { type: "none", value: 0, description: "能力なし" } },
       { id: 31, name: "ニンリバル・レクター", mark: "tatsu", power: 7, ability: { type: "none", value: 0, description: "能力なし" } }
     ];
   </script>
+  
   <script src="carddata.js"></script> <!-- カードデータは既存のものを流用 -->
   <script src="view.js"></script>
 </body>

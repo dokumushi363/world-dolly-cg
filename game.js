@@ -193,7 +193,7 @@ function playRound(playerCard, playerIndex) {
   let cpuPts = cpuCard.power;
   let roundLog = "";
 
-  // ポイントを書き換える（ラウンド依存バフ）
+  // ポイントを加算する（ラウンド依存バフ）
   if (playerCard.ability?.type === "first_power" && currentRound === 1) {
     const buff = playerCard.ability.value || 0;
     playerPts += buff;
@@ -218,15 +218,28 @@ function playRound(playerCard, playerIndex) {
     roundLog += `【CPU能力発動】最終ラウンドで強化： ⚔️${cpuCard.power} ⇒ ⚔️${cpuPts}<br>`;
   }
 
+  // ポイントを書き換える（デバフ）
+  if (playerCard.ability?.type === "change_power") {
+    const debuff = playerCard.ability.value || 0;
+    roundLog += `【能力発動】相手カードの攻撃力が変化： ⚔️${cpuPts} ⇒ ⚔️${debuff}<br>`; 
+    cpuPts = debuff;
+  }
+
+  if (cpuCard.ability?.type === "change_power") {
+    const debuff = cpuCard.ability.value || 0;
+    roundLog += `【CPU能力発動】あなたのカードの攻撃力が変化： ⚔️${playerPts} ⇒ ⚔️${debuff}<br>`; 
+    playerPts = debuff;
+  }
+
   // ポイントを書き換える（コピーは最後に発動）
   if (playerCard.ability?.type === "copy_power") {
     playerPts = cpuPts;
-    roundLog += `【能力発動】相手カードのパワーをコピー： ⚔️${playerCard.power} ⇒ ⚔️${playerPts}<br>`;
+    roundLog += `【能力発動】相手カードの攻撃力をコピー： ⚔️${playerCard.power} ⇒ ⚔️${playerPts}<br>`;
   }
 
   if (cpuCard.ability?.type === "copy_power") {
     cpuPts = playerPts;
-    roundLog += `【CPU能力発動】相手カードのパワーをコピー： ⚔️${cpuCard.power} ⇒ ⚔️${cpuPts}<br>`;
+    roundLog += `【CPU能力発動】あなたのカードの攻撃力をコピー： ⚔️${cpuCard.power} ⇒ ⚔️${cpuPts}<br>`;
   }
 
   // ポイント獲得
