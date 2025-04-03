@@ -193,31 +193,56 @@ function playRound(playerCard, playerIndex) {
   let cpuPts = cpuCard.power;
   let roundLog = "";
 
-  // ポイントを書き換える
+  // ポイントを書き換える（ラウンド依存バフ）
+  if (playerCard.ability?.type === "first_power" && currentRound === 1) {
+    const buff = playerCard.ability.value || 0;
+    playerPts += buff;
+    roundLog += `【能力発動】第1ラウンドで強化： ⚔️${playerCard.power} ⇒ ⚔️${playerPts}<br>`;
+  }
+
+  if (cpuCard.ability?.type === "first_power" && currentRound === 1) {
+    const buff = cpuCard.ability.value || 0;
+    cpuPts += buff;
+    roundLog += `【CPU能力発動】第1ラウンドで強化： ⚔️${cpuCard.power} ⇒ ⚔️${cpuPts}<br>`;
+  }
+
+  if (playerCard.ability?.type === "last_power" && currentRound === 6) {
+    const buff = playerCard.ability.value || 0;
+    playerPts += buff;
+    roundLog += `【能力発動】最終ラウンドで強化： ⚔️${playerCard.power} ⇒ ⚔️${playerPts}<br>`;
+  }
+
+  if (cpuCard.ability?.type === "last_power" && currentRound === 6) {
+    const buff = cpuCard.ability.value || 0;
+    cpuPts += buff;
+    roundLog += `【CPU能力発動】最終ラウンドで強化： ⚔️${cpuCard.power} ⇒ ⚔️${cpuPts}<br>`;
+  }
+
+  // ポイントを書き換える（コピーは最後に発動）
   if (playerCard.ability?.type === "copy_power") {
-    playerPts = cpuCard.power;
-    roundLog += `能力発動：相手カードの点数をコピー ${playerCard.power}点 ⇒ ${playerPts}点<br>`;
+    playerPts = cpuPts;
+    roundLog += `【能力発動】相手カードのパワーをコピー： ⚔️${playerCard.power} ⇒ ⚔️${playerPts}<br>`;
   }
 
   if (cpuCard.ability?.type === "copy_power") {
-    cpuPts = playerCard.power;
-    roundLog += `能力発動：CPU 相手カードの点数をコピー ${cpuCard.power}点 ⇒ ${cpuPts}点<br>`;
+    cpuPts = playerPts;
+    roundLog += `【CPU能力発動】相手カードのパワーをコピー： ⚔️${cpuCard.power} ⇒ ⚔️${cpuPts}<br>`;
   }
 
   // ポイント獲得
   if (winner === "player") {
     playerGain = playerPts;
     playerScore += playerGain;
-    roundLog += `<strong>🎉 あなたの勝ち！ +${playerGain}点</strong><br>`;
+    roundLog += `<strong>🎉あなたの勝ち： +${playerGain}点</strong><br>`;
   } else if (winner === "cpu") {
     cpuGain = cpuPts;
     cpuScore += cpuGain;  
-    roundLog += `<strong>💥 CPUの勝ち！ +${cpuGain}点</strong><br>`;
+    roundLog += `<strong>💥CPUの勝ち： +${cpuGain}点</strong><br>`;
   } else {
-    roundLog += `<strong>⚖️ 引き分け！ 双方得点なし</strong><br>`;
+    roundLog += `<strong>⚖️引き分け： 双方得点なし</strong><br>`;
   }
 
-  // 勝利処理のあとに、勝者カードの能力をチェック
+  /* 勝利処理のあとに、勝者カードの能力をチェック
   if (winner === "player" && playerCard.ability?.type === "first_win_bonus" && currentRound === 1) {
     const bonus = playerCard.ability.value || 0;
     playerScore += bonus;
@@ -241,17 +266,18 @@ function playRound(playerCard, playerIndex) {
     cpuScore += bonus;
     roundLog += `能力発動：<strong>CPU 💎 最後に勝利ボーナス +${bonus}点</strong><br>`;
   }
+  */
 
   // 敗北時の能力処理（敗者にも加点）
   if (winner === "cpu" && playerCard.ability?.type === "lose_bonus") {
     const bonus = playerCard.ability.value || 0;
     playerScore += bonus;
-    roundLog += `能力発動：<strong>💎敗北時ボーナス +${bonus}点</strong><br>`;
+    roundLog += `【能力発動】<strong>💎敗北時ボーナス： +${bonus}点</strong><br>`;
   }
   if (winner === "player" && cpuCard.ability?.type === "lose_bonus") {
     const bonus = cpuCard.ability.value || 0;
     cpuScore += bonus;
-    roundLog += `能力発動：<strong>CPU 💎敗北時ボーナス +${bonus}点</strong><br>`;
+    roundLog += `【CPU能力発動】<strong>💎敗北時ボーナス： +${bonus}点</strong><br>`;
   }
 
   // 対戦カード画像と名前表示
