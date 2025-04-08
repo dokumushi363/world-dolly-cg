@@ -15,9 +15,12 @@ let playerScore = 0;
 let cpuScore = 0;
 let currentRound = 1;
 
+const finalArea = document.getElementById("final-area");
+finalArea.style.display = "none";
 const handArea = document.getElementById("hand-area");
 const result = document.getElementById("result");
 const cpuArea = document.getElementById("cpu-card-area");
+//cpuArea.style.display = "none";
 
 function addLog(text) {
   result.innerHTML = text + "<br>" + result.innerHTML;
@@ -255,32 +258,6 @@ function playRound(playerCard, playerIndex) {
     roundLog += `<strong>⚖️引き分け： 双方得点なし</strong><br>`;
   }
 
-  /* 勝利処理のあとに、勝者カードの能力をチェック
-  if (winner === "player" && playerCard.ability?.type === "first_win_bonus" && currentRound === 1) {
-    const bonus = playerCard.ability.value || 0;
-    playerScore += bonus;
-    roundLog += `能力発動：<strong>💎 最初に勝利ボーナス +${bonus}点</strong><br>`;
-  }
-
-  if (winner === "cpu" && cpuCard.ability?.type === "first_win_bonus" && currentRound === 1) {
-    const bonus = cpuCard.ability.value || 0;
-    cpuScore += bonus;
-    roundLog += `能力発動：<strong>CPU 💎 最初に勝利ボーナス +${bonus}点</strong><br>`;
-  }
-
-  if (winner === "player" && playerCard.ability?.type === "last_win_bonus" && currentRound === 6) {
-    const bonus = playerCard.ability.value || 0;
-    playerScore += bonus;
-    roundLog += `能力発動：<strong>💎 最後に勝利ボーナス +${bonus}点</strong><br>`;
-  }
-
-  if (winner === "cpu" && cpuCard.ability?.type === "last_win_bonus" && currentRound === 6) {
-    const bonus = cpuCard.ability.value || 0;
-    cpuScore += bonus;
-    roundLog += `能力発動：<strong>CPU 💎 最後に勝利ボーナス +${bonus}点</strong><br>`;
-  }
-  */
-
   // 敗北時の能力処理（敗者にも加点）
   if (winner === "cpu" && playerCard.ability?.type === "lose_bonus") {
     const bonus = playerCard.ability.value || 0;
@@ -323,30 +300,79 @@ function playRound(playerCard, playerIndex) {
 
   currentRound++;
 
+  if (currentRound === 4) {
+    // 強化・プレイヤーの手札
+    playerHand.forEach(card => {
+      if (card.ability?.type === "grow_power") {
+        card.power += card.ability.value;
+        card.ability.description = `強くなった！`; // 表示上の変化もあっても良い
+      }
+    });
+  
+    // 強化・CPUの手札
+    cpuHand.forEach(card => {
+      if (card.ability?.type === "grow_power") {
+        card.power += card.ability.value;
+        card.ability.description = `強くなった！`;
+      }
+    });
+
+    // 弱体化・プレイヤーの手札
+    playerHand.forEach(card => {
+      if (card.ability?.type === "waste_power") {
+        card.power -= card.ability.value;
+        card.ability.description = `弱体化した！`; // 表示上の変化もあっても良い
+      }
+    });
+  
+    // 弱体化・CPUの手札
+    cpuHand.forEach(card => {
+      if (card.ability?.type === "waste_power") {
+        card.power -= card.ability.value;
+        card.ability.description = `弱体化した！`;
+      }
+    });
+  }
+
   renderHand(); // ← 最終ラウンドでも呼ぶ！
 
   if (currentRound > 6) {
     setTimeout(() => {
       showFinalResult()
-    }, 1000);
+    }, 600);
   }
 }
 
 function showFinalResult() {
   updateRoundInfo(); // ← ここで呼び出し
 
-  let final = `<hr><h2>ゲーム終了！</h2>`;
-  final += `あなた：${playerScore} 点<br>CPU：${cpuScore} 点<br><br>`;
+  let resultText = "";
   if (playerScore > cpuScore) {
-    final += `🎉 <strong>あなたの勝利！</strong>`;
+    resultText = `🎉<strong>あなたの勝利！</strong>`;
   } else if (cpuScore > playerScore) {
-    final += `💥 <strong>CPUの勝利！</strong>`;
+    resultText = `💥<strong>CPUの勝利！</strong>`;
   } else {
-    final += `⚖️ <strong>引き分け！</strong>`;
+    resultText = `⚖️<strong>引き分け！</strong>`;
   }
-  result.innerHTML = final;
+
+  let final = "<h3>ゲーム終了！</h3>";
+  final += `　あなた：${playerScore} 点<br>　CPU：${cpuScore} 点<br><br>`;
+  final += `
+    <div class="final-result-row">
+      <div class="final-result-text">${resultText}</div>
+      <button id="restart-button">もう一度遊ぶ</button>
+    </div>
+  `;
+
+  finalArea.innerHTML = final;
+  finalArea.style.display = "block";
   handArea.innerHTML = "";
+  handArea.style.display = "none";
   cpuArea.innerHTML = "";
+
+  document.getElementById("restart-button").addEventListener("click", () => {
+    location.reload();
+  });
 }
 
 function getWinner(mark1, mark2) {

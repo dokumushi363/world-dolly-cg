@@ -28,7 +28,7 @@ body {
   */
   width: 30rem; /* リキッドレイアウト実験 */
   height: 44rem; /* リキッドレイアウト実験 */
-  margin: 0 auto 2.5rem;  /* ← カードを中央揃え＋ボタンと距離を取る */
+  margin: 0 auto 1.8rem;  /* ← カードを中央揃え＋ボタンと距離を取る */
   padding: 0;
   background: #fff;
   border: 0.25rem solid #333;
@@ -149,10 +149,10 @@ body {
 }
 
 .card-footer {
-  font-size: 1.4rem;
-  line-height: 1.6;
+  font-size: 1.8rem;
+  line-height: 1.5;
   height: 6rem;         /* ← 約2行分 */
-  padding: 0.25rem 1rem;
+  padding: 0.2rem 1rem;
   color: #000;
   background: #fbfbfb;
   border-top: 1px solid #ccc;
@@ -168,7 +168,7 @@ button {
   width: 30rem;
   font-weight: bold;
   font-size: 1.8rem;
-  margin: 0.5rem auto;
+  margin: 0.3rem auto;
   padding: 1.0rem 1.0rem;
   background: #fbfbfb;
   cursor: pointer;
